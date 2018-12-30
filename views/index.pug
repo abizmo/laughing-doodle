@@ -1,5 +1,13 @@
-html
-  head
-    title= msg
-  body
-    h1= msg
+extends layout
+
+block content
+    h1 Biblioteca personal
+    if books
+      h2 #{booksCount} libros registrados
+      ul
+        each book, i in books
+          li
+            h3= book.title
+            a(href='/api/books/#{book.id}') #{book.commentcount} Comentarios
+    else
+      h2 No hay libros registrados
