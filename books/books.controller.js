@@ -1,6 +1,6 @@
 const Book = require('./books.model');
 
-const getAll = async (req, res) => {
+const getAll = async (req, res, next) => {
   try {
     const books = await Book.find({})
       .select('title comments');
@@ -13,12 +13,11 @@ const getAll = async (req, res) => {
     });
     res.status(200).json(resultBooks);
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Error del servidor'});
+    next(error);
   }
 };
 
-const createNew = async (req, res) => {
+const createNew = async (req, res, next) => {
   const title = req.body.title.toLowerCase();
   try {
     const book = await Book.create({ title });
@@ -27,24 +26,24 @@ const createNew = async (req, res) => {
       _id: book._id
     });
   } catch (error) {
-    console.error(error);
-    if (error.code === 11000)
-      return res.status(409).json({ error: 'El libro ya existe.'});
-    res.status(500).json({ error: 'Error del servidor' });
+    if (error.code === 11000) {
+      const error = new Error('El libro ya existe');
+      error.status = 500;
+      next(error);
+    } else next(error);
   }
 };
 
-const deleteAll = async (req, res) => {
+const deleteAll = async (req, res, next) => {
   try {
     const books = await Book.deleteMany({});
     res.status(200).json({ msg: 'complete delete succesful' });
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Error del servidor' });
+    next(error);
   }
 };
 
-const getOne = async (req, res) => {
+const getOne = async (req, res, next) => {
   const { bookId } = req.params;
   try {
     const book = await Book.findById(bookId)
@@ -52,12 +51,11 @@ const getOne = async (req, res) => {
     if (!book) return res.status(404).json({ msg: 'Book not found!' });
     res.status(200).json(book);
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Error del servidor' });
+    next(error);
   }
 };
 
-const addComment = async (req, res) => {
+const addComment = async (req, res, next) => {
   const { bookId } = req.params;
   try {
     const book = await Book.findById(bookId)
@@ -68,19 +66,17 @@ const addComment = async (req, res) => {
     await book.save();
     res.status(200).json(book);
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Error del servidor' });
+    next(error);
   }
 };
 
-const deleteOne = async (req, res) => {
+const deleteOne = async (req, res, next) => {
   const { bookId } = req.params;
   try {
     const book = await Book.findByIdAndRemove(bookId);
     res.status(200).json({ msg: 'delete succesful'})
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Error del servidor' });
+    next(error);
   }
 };
 
