@@ -2,7 +2,7 @@ const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 module.exports = {
-  entry: path.join(__dirname, "src", "public", "index.jsx"),
+  entry: ["@babel/polyfill", path.join(__dirname, "src", "public", "index.jsx")],
   output: {
     path: path.join(__dirname, "dist"),
     publicPath: "/",
