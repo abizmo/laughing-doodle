@@ -1,7 +1,7 @@
 const React = require('react');
 const Router = require('react-router-dom/BrowserRouter').default;
 const Route = require('react-router-dom/Route').default;
-const Library = require('../Library/Library');
+const Library = require('../Library/LibraryContainer');
 const Header = require('../Header/Header');
 const CssBaseline = require('@material-ui/core/CssBaseline').default;
 
