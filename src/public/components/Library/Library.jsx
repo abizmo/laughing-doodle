@@ -1,6 +1,6 @@
 const React = require('react');
 const Typography = require('@material-ui/core/Typography').default;
-const AddBook = require('./AddBook/AddBook');
+const AddBook = require('./AddBook/AddBookContainer');
 const Books = require('./Books/Books');
 
 class Library extends React.Component {
@@ -21,7 +21,7 @@ class Library extends React.Component {
           Actualmente tienes {books.length + availableBooks}
         </Typography>
         <AddBook />
-        <Books books={books} />
+        <Books books={ books }/>
       </React.Fragment>
     );
   }

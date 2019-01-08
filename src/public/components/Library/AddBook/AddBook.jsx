@@ -23,8 +23,8 @@ const styles = theme => ({
   },
 });
 
-const AddBook = ({ classes }) => (
-  <form className={classes.form}>
+const AddBook = ({ classes, AddBook }) => (
+  <form className={classes.form} onSubmit={ (e) => AddBook(e) }>
     <FormControl 
     margin="normal" 
     required 
