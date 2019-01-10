@@ -4,7 +4,7 @@ const { SetBooks } = require('../libraryActions');
 const AddBookRequest = require('./utils/AddBookRequest');
 
 const mapStateToProps = state => {
-  return null;
+  return {};
 };
 
 const mapDispatchToProps = dispatch => {
