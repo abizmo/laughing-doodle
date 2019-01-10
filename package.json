@@ -22,6 +22,7 @@
   "homepage": "https://github.com/abizmo/laughing-doodle#readme",
   "dependencies": {
     "@material-ui/core": "^3.8.1",
+    "@material-ui/icons": "^3.0.2",
     "body-parser": "^1.18.3",
     "chai": "^4.2.0",
     "chai-http": "^4.2.0",
