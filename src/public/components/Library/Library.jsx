@@ -5,6 +5,7 @@ const DeleteIcon = require('@material-ui/icons/Delete').default;
 const { withStyles } = require('@material-ui/core/styles');
 const AddBook = require('./AddBook/AddBookContainer');
 const Books = require('./Books/Books');
+const pluralize = require('../../../lib/utils/plurarize');
 
 const styles = theme => ({
   margin: {
@@ -23,11 +24,10 @@ class Library extends React.Component {
 
   render () {
     const { books, classes, DeleteBooks } = this.props;
-    const availableBooks = books.length === 1 ? ' libro disponible' : ' libros disponibles';
     return (
       <React.Fragment>
         <Typography component="h1" variant="h6" align="center">
-          Actualmente tienes {books.length + availableBooks}
+          Actualmente tienes { pluralize('libro', books.length)}.
           <span>
             <IconButton onClick={ DeleteBooks } aria-label="Delete" className={classes.margin}>
               <DeleteIcon fontSize="small" />
