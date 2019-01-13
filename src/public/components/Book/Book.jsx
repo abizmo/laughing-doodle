@@ -11,26 +11,15 @@ const pluralize = require('../../../lib/utils/plurarize');
 class Book extends React.Component {
   constructor (props) {
     super(props);
-    this.state = {
-      title: "hola",
-      comments: [1]
-    };
   }
 
-  async componentDidMount () {
+  componentDidMount () {
     const bookId = this.props.bookId;
-    try {
-      const response = await fetch(`/api/v1/books/${bookId}`);
-      const book = await response.json();
-      console.log(book);
-      this.setState({ ...book });
-    } catch (error) {
-      console.log(error);
-    }
+    this.props.setBook(bookId);
   }
 
   render () {
-    const { title, comments } = this.state;
+    const { bookId, title, comments } = this.props;
     return (
       <React.Fragment>
         <Typography component="h2" variant="h4" align="center">
@@ -51,7 +40,7 @@ class Book extends React.Component {
             )) 
           }
         </List>
-        <AddComment />
+        <AddComment bookId={ bookId } addComment={ this.props.addComment }/>
       </React.Fragment>
     );
   }
