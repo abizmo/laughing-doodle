@@ -2,6 +2,7 @@ const { connect } = require('react-redux');
 const Book = require('./Book');
 const { SetBook } = require('./bookActions');
 const AddCommentRequest = require('./utils/AddCommentRequest');
+const DeleteBooksRequest = require('../Library/utils/DeleteBooksRequest');
 
 const mapStateToProps = (state, { match }) => {
   return {
@@ -37,6 +38,19 @@ const mapDispatchToProps = (dispatch) => {
         return dispatch(SetBook(book.title, book.comments));
       } catch (error) {
         console.log(error)
+      }
+    },
+    deleteBook: async (bookId) => {
+      const request = DeleteBooksRequest();
+      try {
+        let response = await fetch(`/api/v1/books/${bookId}`, request);
+        if (!response.ok) {
+          const json = await response.json();
+          throw new Error(json.error);
+        }
+      }
+      catch (error) {
+        console.log(error);
       }
     }
   };
